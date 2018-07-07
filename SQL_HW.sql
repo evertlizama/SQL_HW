@@ -200,11 +200,14 @@ SELECT i.film_id, film.title, COUNT(*) AS 'rental_count'
 -- 7f. Write a query to display how much business, in dollars, each store brought in.
 -- Follow up
 
-select store.store_id, sum(payment.amount) as totalPayment 
-from payment 
-inner join customer on payment.customer_id = customer.customer_id
-inner join store on customer.store_id = store.store_id
-group by store.store_id;
+SELECT s.store_id, p.total_payment
+FROM staff s
+JOIN
+    (
+   SELECT staff_id, SUM(amount) AS 'total_payment'
+    FROM payment
+    GROUP BY staff_id
+   ) p ON s.staff_id=p.staff_id;
 
 
 -- * 7g. Write a query to display for each store its store ID, city, and country.
@@ -250,4 +253,8 @@ SELECT * FROM Top_5_Grossing_Genres;
 -- 8c. Drop created view
 
 DROP VIEW Top_5_Grossing_Genres;
+
+
+-- select store.store_id, sum(payment.amount) as totalPayment from payment inner join customer on payment.customer_id = customer.customer_idinner join store on customer.store_id = store.store_idgroup by store.store_id;
+
 
